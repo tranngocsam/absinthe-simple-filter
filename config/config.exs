@@ -17,6 +17,12 @@ config :demo, DemoWeb.Endpoint,
   render_errors: [view: DemoWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Demo.PubSub, adapter: Phoenix.PubSub.PG2]
 
+# Phauxth authentication configuration
+config :phauxth,
+  user_context: Demo.Accounts,
+  crypto_module: Comeonin.Argon2,
+  token_module: DemoWeb.Auth.Token
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

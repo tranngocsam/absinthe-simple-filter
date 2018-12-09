@@ -8,8 +8,8 @@
 Faker.start()
 
 user_attrs = [
-  %{email: "jane.doe@example.com", password: "12341234"},
-  %{email: "john.smith@example.org", password: "12341234"},
+  %{email: "lung1@yahoo.com", password: "12341234"},
+  %{email: "lung2@example.org", password: "12341234"},
   %{email: Faker.Internet.email, password: "12341234"},
   %{email: Faker.Internet.email, password: "12341234"},
   %{email: Faker.Internet.email, password: "12341234"},

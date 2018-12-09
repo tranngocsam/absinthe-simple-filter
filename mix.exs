@@ -47,9 +47,9 @@ defmodule Demo.MixProject do
       {:arc, ">= 0.11.0"},
       {:ast_simple_filter, path: "../ast-simple-filter"},
       {:faker, ">= 0.11.0", only: [:test, :dev]},
-      {:bcrypt_elixir, "~> 1.0"},
       {:ecto_autoslug_field, ">= 0.5.0"},
-      {:phauxth, "~> 1.2"},
+      {:phauxth, "~> 2.0.0"},
+      {:argon2_elixir, "~> 1.3"},
       {:timex, "~> 3.1"}
     ]
   end

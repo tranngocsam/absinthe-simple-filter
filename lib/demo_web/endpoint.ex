@@ -41,4 +41,8 @@ defmodule DemoWeb.Endpoint do
     signing_salt: "d+otkvQI"
 
   plug DemoWeb.Router
+
+  plug Absinthe.Plug,
+    schema: DemoWeb.Schema,
+    json_codec: Jason
 end
