@@ -5,7 +5,7 @@ defmodule Demo.Accounts.Company do
 
   alias Demo.Accounts.Company
 
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.Company
+  use AstSimpleFilter.DefineFilterFunctions, klcass: Demo.Accounts.Company
 
   @primary_key {:id, :binary_id, autogenerate: true}
   

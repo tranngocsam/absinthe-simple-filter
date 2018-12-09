@@ -7,7 +7,7 @@ defmodule Demo.Accounts.User do
   alias Demo.Sessions.Session
   alias Demo.Accounts.User
 
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.User
+  use AstSimpleFilter.DefineFilterFunctions, klass: Demo.Accounts.User
 
   @primary_key {:id, :binary_id, autogenerate: true}
 

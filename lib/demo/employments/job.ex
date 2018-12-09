@@ -5,7 +5,7 @@ defmodule Demo.Employments.Job do
 
   alias Demo.Employments.Job
 
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Employments.Job
+  use AstSimpleFilter.DefineFilterFunctions, klass: Demo.Employments.Job
 
   @primary_key {:id, :binary_id, autogenerate: true}
   

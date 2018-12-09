@@ -4,7 +4,7 @@ defmodule Demo.Accounts.UserProfile do
   import Ecto.Query
 
   alias Demo.Accounts.UserProfile
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.UserProfile
+  use AstSimpleFilter.DefineFilterFunctions, klass: Demo.Accounts.UserProfile
 
   @primary_key {:id, :binary_id, autogenerate: true}
   
