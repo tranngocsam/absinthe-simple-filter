@@ -2,9 +2,10 @@ defmodule Demo.Employments.Job do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Employments.Job.filter_fields
 
   alias Demo.Employments.Job
+
+  use AstSimpleFilter.DefineFilterFunctions, Demo.Employments.Job
 
   @primary_key {:id, :binary_id, autogenerate: true}
   

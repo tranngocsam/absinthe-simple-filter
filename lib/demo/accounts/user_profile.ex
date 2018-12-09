@@ -2,9 +2,9 @@ defmodule Demo.Accounts.UserProfile do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.UserProfile.filter_fields
 
   alias Demo.Accounts.UserProfile
+  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.UserProfile
 
   @primary_key {:id, :binary_id, autogenerate: true}
   
@@ -37,11 +37,11 @@ defmodule Demo.Accounts.UserProfile do
   def filter_fields do
     [
       %{field: :id, type: :binary_id},
-      %{field: :name, type: :string}, 
-      %{field: :slug, type: :string}, 
-      %{field: :dob, type: :date}, 
-      %{field: :city, type: :string}, 
-      %{field: :state, type: :string}, 
+      %{field: :name, type: :string},
+      %{field: :slug, type: :string},
+      %{field: :dob, type: :date},
+      %{field: :city, type: :string},
+      %{field: :state, type: :string},
       %{field: :country, type: :string}
     ]
   end

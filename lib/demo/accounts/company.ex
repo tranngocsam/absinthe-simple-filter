@@ -2,9 +2,10 @@ defmodule Demo.Accounts.Company do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
-  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.Company.filter_fields
 
   alias Demo.Accounts.Company
+
+  use AstSimpleFilter.DefineFilterFunctions, Demo.Accounts.Company
 
   @primary_key {:id, :binary_id, autogenerate: true}
   
