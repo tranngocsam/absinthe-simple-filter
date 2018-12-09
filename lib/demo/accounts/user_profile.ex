@@ -28,8 +28,8 @@ defmodule Demo.Accounts.UserProfile do
 
   def changeset(%UserProfile{} = profile, attrs) do
     profile
-    |> cast(attrs, @required_fields, @optional_fields)
-    |> validate_required([:name])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> NameSlug.maybe_generate_slug
     |> NameSlug.unique_constraint
   end
@@ -40,9 +40,8 @@ defmodule Demo.Accounts.UserProfile do
       %{field: :name, type: :string},
       %{field: :slug, type: :string},
       %{field: :dob, type: :date},
-      %{field: :city, type: :string},
-      %{field: :state, type: :string},
-      %{field: :country, type: :string}
+      %{field: :address, type: :map},
+      %{field: :inserted_at, type: :naive_datetime}
     ]
   end
 end

@@ -26,6 +26,28 @@ defmodule DemoWeb.Schema do
         end
       end
     end
+
+    @desc "Get a list of user profiles"
+    field :user_profiles, :user_profile_results do
+      arg(:filters, :user_profile_filter_input)
+      arg(:pagination, :asf_pagination_input)
+      resolve fn _parent, args, resolution ->
+        if resolution.context.current_user do
+          pagination = Demo.Accounts.list_user_profiles(args[:filters], args[:pagination])
+          result = %{
+            data: pagination.entries,
+            meta: %{
+              total: pagination.total_entries,
+              page_number: pagination.page_number,
+              per_page: pagination.per_page
+            }
+          }
+          {:ok, result}
+        else
+          {:error, message: "Unauthorized", code: 403}
+        end
+      end
+    end
   end
 
   mutation do

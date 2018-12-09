@@ -76,6 +76,24 @@ defmodule Demo.Accounts do
     User.changeset(user, %{})
   end
 
+  ################## USER PROFILE #######################
+
+  @doc """
+  Returns the list of users.
+  """
+  # def list_users, do: Repo.all(User)
+  def list_user_profiles(args \\ %{}, pagination_params \\ %{}) do
+    args = args || %{}
+    pagination_params = pagination_params || %{}
+
+    fields = UserProfile.filter_fields
+             |> Enum.map(fn(h)-> h[:field] end)
+    query = from u in "user_profiles", select: map(u, ^fields)
+    query = query |> UserProfile.asf_filter(args)
+
+    Demo.Paginator.paginate(query, pagination_params)
+  end
+
   def create_user_profile(attrs) do
     %UserProfile{}
     |> UserProfile.changeset(attrs)
@@ -91,6 +109,8 @@ defmodule Demo.Accounts do
   def delete_user_profile(%UserProfile{} = user_profile) do
     Repo.delete(user_profile)
   end
+
+  #################### COMPANY ############################
 
   def create_company(attrs) do
     %Company{}

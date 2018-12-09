@@ -27,7 +27,7 @@ defmodule Demo.Employments.Skill do
 
   def changeset(%Skill{} = skill, attrs) do
     skill
-    |> cast(attrs, @required_fields, @optional_fields)
+    |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
 

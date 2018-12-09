@@ -17,6 +17,8 @@ config :demo, DemoWeb.Endpoint,
   render_errors: [view: DemoWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Demo.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :postgrex, :json_library, Jason
+
 # Phauxth authentication configuration
 config :phauxth,
   user_context: Demo.Accounts,

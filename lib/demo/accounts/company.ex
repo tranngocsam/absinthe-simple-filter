@@ -27,8 +27,8 @@ defmodule Demo.Accounts.Company do
 
   def changeset(%Company{} = company, attrs) do
     company
-    |> cast(attrs, @required_fields, @optional_fields)
-    |> validate_required([:name])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> NameSlug.maybe_generate_slug
     |> NameSlug.unique_constraint
   end

@@ -32,7 +32,7 @@ defmodule Demo.Employments.Job do
 
   def changeset(%Job{} = user, attrs) do
     user
-    |> cast(attrs, @required_fields, @optional_fields)
+    |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
 

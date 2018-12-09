@@ -21,7 +21,7 @@ defmodule Demo.Employments.UserProfileSkill do
 
   def changeset(%UserProfileSkill{} = user_profile_skill, attrs) do
     user_profile_skill
-    |> cast(attrs, @required_fields, @optional_fields)
+    |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
 

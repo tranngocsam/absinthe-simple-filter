@@ -21,7 +21,7 @@ defmodule Demo.Accounts.UserCompany do
 
   def changeset(%UserCompany{} = user_company, attrs) do
     user_company
-    |> cast(attrs, @required_fields, @optional_fields)
+    |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
 
