@@ -30,6 +30,7 @@ defmodule Demo.Accounts.UserProfile do
     profile
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> validate_address_field
     |> NameSlug.maybe_generate_slug
     |> NameSlug.unique_constraint
   end
@@ -43,5 +44,24 @@ defmodule Demo.Accounts.UserProfile do
       %{field: :address, type: :map},
       %{field: :inserted_at, type: :naive_datetime}
     ]
+  end
+
+  ############## PRIVATE FUNCTIONS ################
+
+  defp validate_address_field(changeset) do
+    validate_change(changeset, :address, fn _, address ->
+      if address do
+        if is_map(address) do
+          diff = Map.keys(address) -- [:street1, :street2, :city, :county, :state, :country, "street1", "street2", "city", "county", "state", "country"]
+          if diff && length(diff) > 0 do
+            [{:address, "Unkown keys: #{inspect(diff)}"}]
+          else
+            []
+          end
+        else
+          [{:address, "is not a map"}]
+        end
+      end
+    end)
   end
 end
