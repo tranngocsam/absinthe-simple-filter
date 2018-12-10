@@ -2,6 +2,7 @@ defmodule DemoWeb.Schema do
   use Absinthe.Schema
 
   import_types Demo.Schema.DataTypes
+  import_types Absinthe.Plug.Types
   import Ecto.Query
 
   query do
@@ -93,6 +94,7 @@ defmodule DemoWeb.Schema do
       arg(:name, :string)
       arg(:dob, :date)
       arg(:address, :asf_json)
+      arg(:image, :upload)
 
       resolve fn _parent, args, resolution ->
         if resolution.context.current_user do

@@ -19,6 +19,7 @@ defmodule Demo.Accounts.UserProfile do
     field :address, :map
     field :website, :string
     field :image, :string
+    field :user_type, :string
 
     timestamps()
   end

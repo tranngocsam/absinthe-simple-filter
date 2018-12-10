@@ -95,12 +95,16 @@ defmodule Demo.Accounts do
   end
 
   def create_user_profile(attrs) do
+    attrs = normalize_user_profile_attrs(attrs)
+
     %UserProfile{}
     |> UserProfile.changeset(attrs)
     |> Repo.insert()
   end
 
   def update_user_profile(%UserProfile{} = user_profile, attrs) do
+    attrs = normalize_user_profile_attrs(attrs)
+
     user_profile
     |> UserProfile.changeset(attrs)
     |> Repo.update()
@@ -108,6 +112,17 @@ defmodule Demo.Accounts do
 
   def delete_user_profile(%UserProfile{} = user_profile) do
     Repo.delete(user_profile)
+  end
+
+  defp normalize_user_profile_attrs(attrs) do
+    image_param = attrs[:image]
+    
+    if image_param do
+      {:ok, filename} = Demo.Utils.upload_file(Demo.ImageUploader, image_param)
+      Map.put(attrs, :image, filename)
+    else
+      attrs
+    end
   end
 
   #################### COMPANY ############################
