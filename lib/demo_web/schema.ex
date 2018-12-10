@@ -53,7 +53,6 @@ defmodule DemoWeb.Schema do
   mutation do
     @desc "Register user"
     field :create_user, type: :user do
-      arg(:name, non_null(:string))
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
@@ -85,6 +84,42 @@ defmodule DemoWeb.Schema do
             {:ok, %{token: token}}
           {:error, message} ->
             {:error, message}
+        end
+      end
+    end
+
+    @desc "Create or update user profile of the current user"
+    field :update_user_profile, type: :user_profile_custom_fields do
+      arg(:name, :string)
+      arg(:dob, :date)
+      arg(:address, :asf_json)
+
+      resolve fn _parent, args, resolution ->
+        if resolution.context.current_user do
+          up = Demo.Repo.one(Ecto.assoc(resolution.context.current_user, :user_profile))
+
+          if up do
+            {status, user_profile} = Demo.Accounts.update_user_profile(up, args)
+
+            if status == :ok do
+              {:ok, user_profile}
+            else
+              errors = Demo.Utils.full_messages(user_profile.errors)
+              {:error, %{message: "error", details: errors}}
+            end
+          else
+            user_id = resolution.context.current_user.id
+            {status, user_profile} = Demo.Accounts.create_user_profile(Map.put(args, :user_id, user_id))
+
+            if status == :ok do
+              {:ok, user_profile}
+            else
+              errors = Demo.Utils.full_messages(user_profile.errors)
+              {:error, %{message: "error", details: errors}}
+            end
+          end
+        else
+          {:error, message: "Unauthorized", code: 403}
         end
       end
     end
