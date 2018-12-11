@@ -12,6 +12,18 @@ defmodule Demo.Schema.DataTypes do
     field :token, :string
   end
 
+  object :skill do
+    field :name, :string
+    field :slug, :string
+    field :description, :string
+    field :image, :asf_json do
+      resolve fn skill, _, _ ->
+        urls = Demo.Utils.uploaded_file_urls(Demo.ImageUploader, skill.image, skill)
+        {:ok, urls}
+      end
+    end
+  end
+
   object :user_profile do
     field :name, :string
     field :slug, :string
@@ -23,6 +35,7 @@ defmodule Demo.Schema.DataTypes do
         {:ok, urls}
       end
     end
+    field :skills, list_of(:skill)
   end
 
   use AstSimpleFilter.DefineTypes, base_name: :user, field_types: Demo.Accounts.User.filter_fields
