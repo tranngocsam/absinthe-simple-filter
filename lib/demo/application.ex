@@ -11,7 +11,11 @@ defmodule Demo.Application do
       # Start the Ecto repository
       Demo.Repo,
       # Start the endpoint when the application starts
-      DemoWeb.Endpoint
+      DemoWeb.Endpoint,
+      %{
+        id: Exq,
+        start: {Exq, :start_link, []}
+      }
       # Starts a worker by calling: Demo.Worker.start_link(arg)
       # {Demo.Worker, arg},
     ]

@@ -40,6 +40,16 @@ config :phauxth,
 config :arc,
   storage: Arc.Storage.Local
 
+config :exq,
+  host: "127.0.0.1",
+  port: 6379,
+  namespace: "exq",
+  concurrency: 25,
+  queues: ["default"],
+  scheduler_enable: true,
+  max_retries: 5,
+  start_on_application: false
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

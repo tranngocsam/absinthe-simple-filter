@@ -20,7 +20,7 @@ defmodule Demo.MixProject do
   def application do
     [
       mod: {Demo.Application, []},
-      extra_applications: [:logger, :runtime_tools, :absinthe_plug, :timex]
+      extra_applications: [:logger, :runtime_tools, :absinthe_plug, :timex, :exq]
     ]
   end
 
@@ -48,6 +48,7 @@ defmodule Demo.MixProject do
       {:ast_simple_filter, path: "../ast-simple-filter"},
       {:faker, ">= 0.11.0", only: [:test, :dev]},
       {:ecto_autoslug_field, ">= 0.5.0"},
+      {:exq, ">= 0.12.2"},
       {:phauxth, "~> 2.0.0"},
       {:argon2_elixir, "~> 1.3"},
       {:timex, "~> 3.1"}
