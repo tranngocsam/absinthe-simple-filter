@@ -15,9 +15,7 @@ defmodule Demo.Accounts do
     args = args || %{}
     pagination_params = pagination_params || %{}
 
-    fields = User.filter_fields
-             |> Enum.map(fn(h)-> h[:field] end)
-    query = from u in "users", select: map(u, ^fields)
+    query = from u in User
     query = query |> User.asf_filter(args)
 
     Demo.Paginator.paginate(query, pagination_params)
@@ -86,24 +84,35 @@ defmodule Demo.Accounts do
     args = args || %{}
     pagination_params = pagination_params || %{}
 
-    fields = UserProfile.filter_fields
-             |> Enum.map(fn(h)-> h[:field] end)
-    query = from u in "user_profiles", select: map(u, ^fields)
+    query = from up in UserProfile
     query = query |> UserProfile.asf_filter(args)
 
     Demo.Paginator.paginate(query, pagination_params)
   end
 
   def create_user_profile(attrs) do
-    attrs = normalize_user_profile_attrs(attrs)
+    image_param = attrs[:image]
 
-    %UserProfile{}
+    attrs = if image_param do
+      Map.delete(attrs, :image)
+    else
+      attrs
+    end
+
+    user_profile = %UserProfile{}
     |> UserProfile.changeset(attrs)
     |> Repo.insert()
+
+    if image_param do
+      image_attrs = normalize_user_profile_attrs(user_profile, %{image: image_param})
+      update_user_profile(user_profile, image_attrs)
+    else
+      user_profile
+    end
   end
 
   def update_user_profile(%UserProfile{} = user_profile, attrs) do
-    attrs = normalize_user_profile_attrs(attrs)
+    attrs = normalize_user_profile_attrs(user_profile, attrs)
 
     user_profile
     |> UserProfile.changeset(attrs)
@@ -114,11 +123,11 @@ defmodule Demo.Accounts do
     Repo.delete(user_profile)
   end
 
-  defp normalize_user_profile_attrs(attrs) do
+  defp normalize_user_profile_attrs(user_profile, attrs) do
     image_param = attrs[:image]
     
     if image_param do
-      {:ok, filename} = Demo.Utils.upload_file(Demo.ImageUploader, image_param)
+      {:ok, filename} = Demo.Utils.upload_file(Demo.ImageUploader, image_param, user_profile)
       Map.put(attrs, :image, filename)
     else
       attrs

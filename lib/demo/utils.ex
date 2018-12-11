@@ -5,16 +5,16 @@ defmodule Demo.Utils do
     end
   end
 
-  def upload_file(uploader, %Plug.Upload{} = file) do
-    uploader.store(file)
+  def upload_file(uploader, %Plug.Upload{} = file, scope) do
+    uploader.store({file, scope})
   end
 
-  @spec upload_file(any, String.t) :: tuple
-  def upload_file(uploader, url) do
+  @spec upload_file(any, String.t, any) :: tuple
+  def upload_file(uploader, url, scope) do
     uri = URI.parse(url)
 
     if uri.scheme == "http" || uri.scheme == "https" do
-      uploader.store(url)
+      uploader.store({url, scope})
     else
       {:error, "Invalid url: #{url}"}
     end

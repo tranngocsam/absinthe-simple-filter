@@ -19,7 +19,7 @@ defmodule Demo.Schema.DataTypes do
     field :address, :asf_json
     field :image, :asf_json do
       resolve fn user_profile, _, _ ->
-        urls = Demo.Utils.uploaded_file_urls(Demo.ImageUploader, user_profile[:image], user_profile)
+        urls = Demo.Utils.uploaded_file_urls(Demo.ImageUploader, user_profile.image, user_profile)
         {:ok, urls}
       end
     end
